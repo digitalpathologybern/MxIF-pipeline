@@ -26,23 +26,24 @@ def file_handler(path, script):
         folders = ['']
         extensions = ['.pkl']
         tags = ['_channels']
-        assert osp.exists(path + 'tiles/'), 'There exists no target "tiles" folder. Please run the tile extraction' \
-                                         'first or properly link the "tiles" folder'
+        path_to_assert = path + '/tiles/'
+        assert osp.exists(path_to_assert), f'There exists no target "tiles" folder. Please run the tile extraction' \
+                                         f'first or properly link the "tiles" folder Path: {path_to_assert}'
     elif script == 'EpiSegmentor':
         folders = ['','']
         extensions = ['.pkl','.pkl']
         tags = ['_channels','_model']
-        assert osp.exists(path + 'tiles/'), 'There exists no target "tiles" folder. Please run the tile extraction' \
+        assert osp.exists(path + '/tiles/'), 'There exists no target "tiles" folder. Please run the tile extraction' \
                                             'first or properly link the "tiles" folder'
     elif script == 'CellTyper':
-        folders = ['expressions/','CellType_Instructions/']
+        folders = ['/expressions','/CellType_Instructions']
         extensions = ['.csv', '.csv']
         tags = ['_raw','']
     elif script == 'TumorBudifizer':
-        folders = ['CellType_Instructions/']
+        folders = ['/CellType_Instructions']
         extensions = ['.csv']
         tags = ['']
-        assert osp.exists(path + 'tiles/masks_RFseg/'), 'There exists no target "tiles" folder. Please run the tile extraction ' \
+        assert osp.exists(path + '/tiles/masks_RFseg/'), 'There exists no target "tiles" folder. Please run the tile extraction ' \
                                             'first or properly link the "tiles" folder'
     for folder, extension, tag in zip(folders, extensions, tags):
         assure_files(path + folder, extension, tag=tag)
@@ -56,7 +57,8 @@ def assure_files(path, extension, tag=''):
     :param tag: Unique tag to differentiate from files with the same extension
     :return: None (at least for now)
     """
-    paths = glob(f'{path}*{tag}{extension}')
+    print(f'{path}/*{tag}{extension}')
+    paths = glob(f'{path}/*{tag}{extension}')
 
     assert len(paths) == 1, f'Ambiguous file naming: instead of one file, {len(paths)}' \
                             f' files of type {extension} and tag {tag} were found in target folder'

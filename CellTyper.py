@@ -38,14 +38,14 @@ def main():
     if run_tag != '':
         run_tag = '_' + run_tag
     # need file assertion statements
-    expr_path = glob(f'{PATH}expressions/*{run_tag}_raw.csv')[0]
-    result_path = PATH + 'expressions/'
-    QC_PATH = PATH + 'QC/'
+    expr_path = glob(f'{PATH}/expressions/*{run_tag}_raw.csv')[0]
+    result_path = PATH + '/expressions/'
+    QC_PATH = PATH + '/QC/'
     os.mkdir(QC_PATH) if not os.path.exists(QC_PATH) else None
 
     file_handler(PATH, 'CellTyper')
 
-    INSTRUCTION_NAME = glob(f'{PATH}CellType_Instructions/*.csv')[0]
+    INSTRUCTION_NAME = glob(f'{PATH}/CellType_Instructions/*.csv')[0]
 
     save_steps = args.savesteps  # should inbetween files be saved as well?
     plotting = args.plotting

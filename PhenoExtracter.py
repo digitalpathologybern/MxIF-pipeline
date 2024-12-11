@@ -26,10 +26,10 @@ np.random.seed(44)
 
 parser = argparse.ArgumentParser(description='segment nuclei and extract expression patterns')
 parser.add_argument('path', type=str, help='path to image folder')
-parser.add_argument('-m', '--model', type=str, default='/home/mauro-gwerder/PycharmProjects/PhD_new/stardist_Lunaphore',
+parser.add_argument('-m', '--model', type=str, default='models/stardist_Lunaphore',
                     help='Path to StarDist model folder')
 parser.add_argument('-s', '--save', type=str, default='', help='path to output folder')
-parser.add_argument('-r', '--resume', type=str, default='',
+parser.add_argument('--resume', type=str, default='',
                     help='path to existing output file which should be extended')
 parser.add_argument('-d', '--dapi', type=int, default=0, help='ID of the DAPI channel. Default is 0')
 parser.add_argument('-r', '--run', type=str, default='', help='Tag for your current run')
@@ -51,12 +51,12 @@ def main():
     file_handler(PATH, 'PhenoExtracter')
     if run_tag != '':
         run_tag = '_' + run_tag
-    tiles_path = glob(PATH + 'tiles' + run_tag + '/*.tiff')
-    channel_path =  glob(PATH + '*_channels.pkl')[0]
+    tiles_path = glob(PATH + '/tiles' + run_tag + '/*.tiff')
+    channel_path =  glob(PATH + '/*_channels.pkl')[0]
 
     if save_path == '':
-        save_path = PATH + 'expressions/'
-        nucmask_path = PATH + 'tiles' + run_tag + '/nuc_masks/'
+        save_path = PATH + '/expressions/'
+        nucmask_path = PATH + '/tiles' + run_tag + '/nuc_masks/'
         for p in [save_path, nucmask_path]: os.mkdir(p) if not osp.exists(p) else None
     dapi_ch = args.dapi
 
@@ -77,7 +77,7 @@ def main():
         print('Current image: ' + t)
 
         _, tile_name = osp.split(osp.splitext(osp.splitext(t)[0])[0])
-        _, tile_id, x_coord, y_coord = tile_name.split('_')
+        _, tile_id, x_coord, y_coord, _ = tile_name.split('_')
         if gdf_global is not None:
 
             if tile_id in gdf_global['tile_id'].astype(str).values:

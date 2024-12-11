@@ -1,0 +1,21 @@
+# Ignore job files
+jobs/
+
+# ignore model folder
+models/
+
+# ignore singularity folder
+singularity/
+
+# ignore caches
+cache/
+__pychache__
+
+# ignore test scripts (for now)
+test/
+
+# ignore some old files
+valis_registration.py
+xtiff_stacking.py
+mrxs_to_ometiff.py
+bioformats_calc_HALO-thresholds.py
